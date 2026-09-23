@@ -1,7 +1,7 @@
 ﻿{
-"name": "realtime-browser-game",
+"name": "Project Vacuum State",
 "version": "1.0.0",
-"description": "A real-time browser game prototype",
+"description": "A real-time space MMORPG browser game",
 "main": "server.js",
 "scripts": {
 "start": "node server.js"
