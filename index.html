@@ -4,217 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vacuum State - Luna Station</title>
-    
-    <!-- JavaScript Game Logic Forced First for Tablets -->
-    <script>
-        // Track game variables globally in active browser memory
-        let playerCredits = 12500;
-        let currentFirstRoll = 0;
-
-        // Triggers when player clicks the purple Casino button
-        function enterCasino() {
-            // Roll the initial die (1 to 6)
-            currentFirstRoll = Math.floor(Math.random() * 6) + 1;
-            
-            // Hide the standard Station Hub menu
-            document.getElementById('hub-menu').style.display = 'none';
-            
-            // Show the interactive Casino Deck view
-            document.getElementById('casino-deck').style.display = 'flex';
-            
-            // Render the initial roll on the screen matrix
-            document.getElementById('dice-display').innerText = `CURRENT DIE: [ ${currentFirstRoll} ]`;
-            document.getElementById('casino-log').innerText = "Place your bet, Operator. The house wins on exact matches.";
-        }
-
-        // Handles the calculation when Higher or Lower buttons are tapped
-        function playGuess(guess) {
-            // Roll the target second die (1 to 6)
-            let secondRoll = Math.floor(Math.random() * 6) + 1;
-            let won = false;
-
-            // Determine win/loss algorithm parameters
-            if (currentFirstRoll === secondRoll) {
-                won = false; // House wins on exact ties
-            } else if (guess === 'H' && secondRoll > currentFirstRoll) {
-                won = true;
-            } else if (guess === 'L' && secondRoll < currentFirstRoll) {
-                won = true;
-            }
-
-            // Update credit math variables
-            if (won) {
-                playerCredits += 500;
-                document.getElementById('casino-log').innerHTML = `<span style="color: #4af626;">SUCCESS: Next roll was [ ${secondRoll} ].<br>+500 Credits added to balance.</span>`;
-            } else {
-                playerCredits -= 500;
-                document.getElementById('casino-log').innerHTML = `<span style="color: #ff3333;">FAILED: Next roll was [ ${secondRoll} ].<br>-500 Credits deducted.</span>`;
-            }
-
-            // Sync visual text engine layout updates
-            document.getElementById('credit-count').innerText = playerCredits;
-
-            // Set up the next continuous game loop immediately by rolling the next baseline die
-            currentFirstRoll = Math.floor(Math.random() * 6) + 1;
-            document.getElementById('dice-display').innerText = `NEW CURRENT DIE: [ ${currentFirstRoll} ]`;
-        }
-
-        // Restores the main station dashboard view
-        function leaveCasino() {
-            document.getElementById('casino-deck').style.display = 'none';
-            document.getElementById('hub-menu').style.display = 'grid';
-        }
-    </script>
-
-    <style>
-        body {
-            background-color: #0d0f12;
-            color: #4af626; 
-            font-family: 'Courier New', Courier, monospace;
-            margin: 0;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            box-sizing: border-box;
-        }
-
-        header {
-            border: 1px solid #4af626;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            background: #14191f;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-        }
-
-        .header-item {
-            font-weight: bold;
-        }
-
-        main {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border: 1px solid #4af626;
-            background: #14191f;
-            padding: 15px;
-            overflow-y: auto;
-        }
-
-        h1 {
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-top: 0;
-            font-size: 1.5rem;
-            border-bottom: 2px solid #4af626;
-            width: 100%;
-            text-align: center;
-            padding-bottom: 5px;
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            width: 100%;
-            max-width: 500px;
-            margin-top: 15px;
-        }
-
-        /* Dedicated Casino layout sub-wrapper */
-        .casino-layout {
-            display: none; /* Hidden by default until invoked */
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 500px;
-            text-align: center;
-        }
-
-        .dice-matrix {
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: #ff00ff;
-            margin: 20px 0;
-            border: 1px dashed #ff00ff;
-            padding: 15px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .station-btn {
-            background: #1b222b;
-            color: #4af626;
-            border: 1px solid #4af626;
-            padding: 20px;
-            font-size: 1.1rem;
-            font-family: inherit;
-            cursor: pointer;
-            text-transform: uppercase;
-            text-align: center;
-            border-radius: 4px;
-        }
-
-        .station-btn:active {
-            background: #4af626;
-            color: #0d0f12;
-        }
-
-        footer {
-            border: 1px solid #4af626;
-            padding: 8px;
-            background: #14191f;
-            margin-top: 10px;
-            font-size: 0.8rem;
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <!-- Constant Information Overlay -->
     <header>
         <div>SYSTEM: <span class="header-item">LUNA ORBIT</span></div>
         <div>CREDITS: <span class="header-item" id="credit-count">12500</span></div>
         <div>ALERTS: <span class="header-item" id="chat-alert" style="color: #ff3333;">(1) MSG</span></div>
     </header>
 
-    <main>
-        <h1>Luna Station Hub</h1>
-        <p style="color: #8a99a8; text-align: center;">Welcome back, Operator. Select a localized deck module.</p>
-        
-        <!-- Standard Hub Options Menu Layout -->
-        <div id="hub-menu" class="options-grid">
-            <button class="station-btn" onclick="alert('Entering Hangar...')">Hangar</button>
-            <button class="station-btn" onclick="alert('Entering Shipyard...')">Shipyard</button>
-            <button class="station-btn" onclick="alert('Opening Commodity Market...')">Market</button>
-            
-            <button class="station-btn" onclick="enterCasino()" style="color: #ff00ff; border-color: #ff00ff;">Casino</button>
-            
-            <button class="station-btn" onclick="alert('Accessing Faction Missions...')">Missions</button>
-            <button class="station-btn" onclick="alert('Undocking Ship...')" style="border-color: #ff9900; color: #ff9900;">Undock Ship</button>
-        </div>
-
-        <!-- Interactive Casino Module Layout -->
-        <div id="casino-deck" class="casino-layout">
-            <div id="dice-display" class="dice-matrix">CURRENT DIE: [ 0 ]</div>
-            
-            <p id="casino-log" style="color: #8a99a8; min-height: 40px; margin-bottom: 20px;"></p>
-            
-            <div class="options-grid">
-                <button class="station-btn" onclick="playGuess('H')" style="border-color: #4af626; color: #4af626;">HIGHER ▲</button>
-                <button class="station-btn" onclick="playGuess('L')" style="border-color: #ff3333; color: #ff3333;">LOWER ▼</button>
-                <button class="station-btn" onclick="leaveCasino()" style="grid-column: span 2; border-color: #8a99a8; color: #8a99a8; padding: 12px;">Return to Hub</button>
-            </div>
-        </div>
+    <!-- Dynamic Main Screen Container -->
+    <main id="main-display">
+        <!-- JavaScript modules will inject screens here dynamically -->
     </main>
 
     <footer>
         SECURE CHAT: [Syndicate-Net] Operational tick processing normally...
     </footer>
 
+    <!-- Load game scripts sequentially -->
+    <script src="state.js"></script>
+    <script src="modules.js"></script>
 </body>
 </html>
