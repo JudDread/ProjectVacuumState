@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vacuum State - Luna Station</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- Relative stylesheet link -->
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 
@@ -17,15 +18,15 @@
 
     <!-- Dynamic Main Screen Container -->
     <main id="main-display">
-        <!-- JavaScript modules will inject screens here dynamically -->
+        <!-- JavaScript modules inject screens here -->
     </main>
 
     <footer>
         SECURE CHAT: [Syndicate-Net] Operational tick processing normally...
     </footer>
 
-    <!-- Load game scripts sequentially -->
-    <script src="state.js"></script>
-    <script src="modules.js"></script>
+    <!-- Scripts must load in this exact order using relative paths -->
+    <script src="./state.js"></script>
+    <script src="./modules.js"></script>
 </body>
 </html>
