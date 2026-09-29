@@ -1,6 +1,8 @@
 // --- MODULE: MAIN HUB MENU ---
 function showHubMenu() {
     const display = document.getElementById('main-display');
+    if (!display) return;
+    
     display.innerHTML = `
         <h1>Luna Station Hub</h1>
         <p style="color: #8a99a8; text-align: center;">Welcome back, Operator. Select a localized deck module.</p>
@@ -25,6 +27,8 @@ function enterCasino() {
 
 function renderCasinoUI() {
     const display = document.getElementById('main-display');
+    if (!display) return;
+
     display.innerHTML = `
         <h1>Luna Casino Deck</h1>
         <div class="dice-matrix">CURRENT DIE: [ ${gameState.casino.currentRoll} ]</div>
@@ -62,3 +66,8 @@ function playCasinoTurn(guess) {
     updateHeaderUI();
     renderCasinoUI();
 }
+
+// Safely initializes the hub rendering setup once the DOM tree has finished compiling
+document.addEventListener("DOMContentLoaded", () => {
+    showHubMenu();
+});
