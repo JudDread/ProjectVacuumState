@@ -1,1 +1,97 @@
 
+body {
+    background-color: #0d0f12;
+    color: #4af626; 
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+header {
+    border: 1px solid #4af626;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    background: #14191f;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.header-item {
+    font-weight: bold;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #4af626;
+    background: #14191f;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+h1 {
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 0;
+    font-size: 1.5rem;
+    border-bottom: 2px solid #4af626;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 5px;
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    width: 100%;
+    max-width: 500px;
+    margin-top: 15px;
+}
+
+.station-btn {
+    background: #1b222b;
+    color: #4af626;
+    border: 1px solid #4af626;
+    padding: 20px;
+    font-size: 1.1rem;
+    font-family: inherit;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.station-btn:active {
+    background: #4af626;
+    color: #0d0f12;
+}
+
+/* Casino Specific Elements */
+.dice-matrix {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #ff00ff;
+    margin: 20px 0;
+    border: 1px dashed #ff00ff;
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+footer {
+    border: 1px solid #4af626;
+    padding: 8px;
+    background: #14191f;
+    margin-top: 10px;
+    font-size: 0.8rem;
+    text-align: center;
+}
