@@ -31,5 +31,5 @@ window.onload = () => {
         
         // 3. Render the hub menus smoothly after the screen fades
         showHubMenu();
-    }, 2000);
+    }, 3000);
 };
