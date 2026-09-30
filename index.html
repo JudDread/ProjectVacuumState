@@ -3,39 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vacuum State - Luna Station</title>
-    <!-- Relative stylesheet link -->
-    <link rel="stylesheet" href="./style.css">
+    <title>Vacuum State</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
-<!-- Insert this directly below your <body> tag -->
-<div id="splash-screen" class="splash-container">
-    <div class="splash-content">
-        <h1 class="splash-title">VACUUM STATE</h1>
-        <p class="splash-subtitle">Establishing connection to Luna Station...</p>
-        <div class="splash-spinner"></div>
+
+    <!-- 1. The Splash Screen Overlay -->
+    <div id="splash-screen" class="splash-container">
+        <div class="splash-content">
+            <h1 class="splash-title">VACUUM STATE</h1>
+            <p class="splash-subtitle">Establishing connection to Luna Station...</p>
+            <div class="splash-spinner"></div>
+        </div>
     </div>
-</div>
 
-    <!-- Constant Information Overlay -->
-    <header>
-        <div>SYSTEM: <span class="header-item">LUNA ORBIT</span></div>
-        <div>CREDITS: <span class="header-item" id="credit-count">12500</span></div>
-        <div>ALERTS: <span class="header-item" id="chat-alert" style="color: #ff3333;">(1) MSG</span></div>
-    </header>
+    <!-- 2. Your Game Layout Wrapper (Make sure credit-count is here) -->
+    <div id="game-container">
+        <div id="header">
+            Credits: <span id="credit-count">0</span>
+        </div>
+        <!-- Your hub buttons and menus go here -->
+    </div>
 
-    <!-- Dynamic Main Screen Container -->
-    <main id="main-display">
-        <!-- JavaScript modules inject screens here -->
-    </main>
+    <!-- 3. Your Script Links -->
+    <script src="modules.js"></script>
+    <script src="state.js"></script>
 
-    <footer>
-        SECURE CHAT: [Syndicate-Net] Operational tick processing normally...
-    </footer>
+    <!-- 4. THE FIX: The Inline Tablet Fail-Safe Script -->
+    <script>
+        // This runs instantly as soon as the HTML finishes parsing
+        setTimeout(function() {
+            var splash = document.getElementById('splash-screen');
+            if (splash) {
+                // Instantly remove it visually and physically
+                splash.style.opacity = '0';
+                splash.style.visibility = 'hidden';
+                splash.style.display = 'none';
+                console.log("Inline HTML script successfully bypassed splash screen.");
+            }
+        }, 2000);
+    </script>
 
-    <!-- Scripts must load in this exact order using relative paths -->
-    <script src="./state.js"></script>
-    <script src="./modules.js"></script>
 </body>
 </html>
