@@ -1,5 +1,12 @@
 // --- MODULE: MAIN HUB MENU ---
 function showHubMenu() {
+    
+    // Set the background image to the lunaHub file
+    const header = document.getElementById('game-header');
+    if (header) {
+        header.style.setProperty('--header-bg', "url('/assests/images/lunaHub.jpg')");
+    }
+
     const display = document.getElementById('main-display');
     if (!display) return;
     
@@ -21,10 +28,16 @@ function showHubMenu() {
 
 // --- MODULE: CASINO ---
 
-// 1. WELCOME SCREEN
 function enterCasino() {
-    // Reset logs if entering fresh
     gameState.casino.lastLog = ''; 
+    
+    // Set the background image to the casino file
+    const header = document.getElementById('game-header');
+    if (header) {
+        header.style.setProperty('--header-bg', "url('/assests/images/lunaCasino.jpg')");
+}
+
+// 1. WELCOME SCREEN
     
     const display = document.getElementById('main-display');
     if (!display) return;
