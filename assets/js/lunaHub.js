@@ -34,7 +34,7 @@ function enterCasino() {
     // Set the background image to the casino file
     const header = document.getElementById('game-header');
     if (header) {
-        header.style.setProperty('--header-bg', "url('/assests/images/lunaCasino.jpg')");
+        header.style.setProperty('--header-bg', "url('/assests/images/lunarCasino.jpg')");
 }
 
 // 1. WELCOME SCREEN
