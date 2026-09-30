@@ -151,3 +151,23 @@ footer {
     font-size: 0.8rem;
     text-align: center;
 }
+/* Base header style with dynamic background capability */
+#game-header {
+    position: relative; 
+    overflow: hidden; 
+    padding: 20px;
+    border-bottom: 2px solid #00ffff; 
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    
+    /* 1. Define the default image if no custom property is provided */
+    --header-bg: url('/assests/images/defaultHub.jpg'); 
+    
+    /* 2. Layer the dark overlay on top of the variable background */
+    background-image: linear-gradient(rgba(11, 12, 16, 0.85), rgba(11, 12, 16, 0.85)), 
+                      var(--header-bg);
+                      
+    background-size: cover;
+    background-position: center;
+    background-color: #0b0c10;
+    transition: background-image 0.3s ease; /* Smooth fade when switching background files */
+}
