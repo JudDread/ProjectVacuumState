@@ -15,3 +15,21 @@ function updateHeaderUI() {
         creditEl.innerText = gameState.credits;
     }
 }
+
+// Kick off initialization sequence when the browser tab mounts
+window.onload = () => {
+    const splash = document.getElementById('splash-screen');
+    
+    // 1. Instantly display standard UI values in the background
+    updateHeaderUI();
+    
+    // 2. Hold the splash screen for exactly 2 seconds (2000ms)
+    setTimeout(() => {
+        if (splash) {
+            splash.classList.add('splash-hidden');
+        }
+        
+        // 3. Render the hub menus smoothly after the screen fades
+        showHubMenu();
+    }, 2000);
+};
