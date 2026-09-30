@@ -89,11 +89,11 @@ header {
     box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
     
     /* 1. Define the default image if no custom property is provided */
-    --header-bg: url('./assets/images/defaultHub.jpg'); 
+    --header-bg: url('../assets/images/defaultHub.jpg'); 
     
     /* 2. Layer the dark overlay on top of the variable background */
-    /*background-image: linear-gradient(rgba(11, 12, 16, 0.85), rgba(11, 12, 16, 0.85)), 
-                      var(--header-bg);*/
+    background-image: linear-gradient(rgba(11, 12, 16, 0.85), rgba(11, 12, 16, 0.85)), 
+                      var(--header-bg);
                       
     background-size: cover;
     background-position: center;
