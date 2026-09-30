@@ -11,7 +11,7 @@ function showHubMenu() {
             <button class="station-btn" onclick="alert('Entering Hangar...')">Hangar</button>
             <button class="station-btn" onclick="alert('Entering Shipyard...')">Shipyard</button>
             <button class="station-btn" onclick="alert('Opening Commodity Market...')">Market</button>
-            <button class="station-btn" onclick="enterCasino()" style="color: #ff00ff; border-color: #ff00ff;">Casino</button>
+            <button class="station-btn" onclick="enterCasino()" style="color: #00ffff; border-color: #00ffff;">Casino</button>
             <button class="station-btn" onclick="alert('Accessing Faction Missions...')">Missions</button>
             <button class="station-btn" onclick="alert('Undocking Ship...')" style="border-color: #ff9900; color: #ff9900;">Undock Ship</button>
         </div>
