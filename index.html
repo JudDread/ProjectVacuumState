@@ -3,39 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vacuum State - Luna Station</title>
-    <!-- Relative stylesheet link -->
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>Vacuum State - Luna Hub</title>
+    <!-- Make sure your filename casing matches perfectly -->
+    <link rel="stylesheet" href="Style.css"> 
 </head>
 <body>
 
-  <!-- Insert this directly below your <body> tag -->
-<div id="splash-screen" class="splash-container">
-    <div class="splash-content">
-        <h1 class="splash-title">VACUUM STATE</h1>
-        <p class="splash-subtitle">Establishing connection to Luna Station...</p>
-        <div class="splash-spinner"></div>
+    <!-- 1. The Splash Screen Panel Overlay -->
+    <div id="splash-screen" class="splash-container">
+        <div class="splash-content">
+            <h1 class="splash-title">VACUUM STATE</h1>
+            <p class="splash-subtitle">Establishing secure link to terminal...</p>
+            <div class="splash-spinner"></div>
+        </div>
     </div>
-</div>
-    
-  <!-- Constant Information Overlay -->
-    <header>
-        <div>SYSTEM: <span class="header-item">LUNA ORBIT</span></div>
-        <div>CREDITS: <span class="header-item" id="credit-count">12500</span></div>
-        <div>ALERTS: <span class="header-item" id="chat-alert" style="color: #ff3333;">(1) MSG</span></div>
+
+    <!-- 2. CRITICAL: Element MUST have class="game-header" AND id="game-header" -->
+    <header class="game-header" id="game-header">
+        <div class="header-item">LOC: <span id="location-text">Luna Orbit</span></div>
+        <div class="header-item">CREDITS: <span id="credit-count">0</span></div>
     </header>
 
-    <!-- Dynamic Main Screen Container -->
+    <!-- 3. The Core Interactive Interface Display Panel -->
     <main id="main-display">
-        <!-- JavaScript modules inject screens here -->
+        <!-- Content will be securely injected here by your JS engines -->
     </main>
 
     <footer>
-        SECURE CHAT: [Syndicate-Net] Operational tick processing normally...
+        SECURE CONNECTION // SYNDICATE-NET SECURED
     </footer>
 
-    <!-- Scripts must load in this exact order using relative paths -->
-    <script src="./assets/js/state.js"></script>
-    <script src="./assets/js/lunaHub.js"></script>
+    <!-- Place your script tags right before closing the body -->
+    <script src="game.js"></script>
 </body>
 </html>
