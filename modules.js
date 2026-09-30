@@ -5,7 +5,7 @@ function showHubMenu() {
     
     display.innerHTML = `
         <h1>Luna Station Hub</h1>
-        <p style="color: #8a99a8; text-align: center;">Welcome back, Operator. Select a localized deck module.</p>
+        <p style="color: #8a99a8; text-align: center;">Welcome back, Operator. Select a destination.</p>
         
         <div class="options-grid">
             <button class="station-btn" onclick="alert('Entering Hangar...')">Hangar</button>
