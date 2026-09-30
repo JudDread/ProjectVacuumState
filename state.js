@@ -58,4 +58,5 @@ window.onload = () => {
         }
         
     }, 2000);
+    showHubMenu();
 };
