@@ -20,52 +20,102 @@ function showHubMenu() {
 }
 
 // --- MODULE: CASINO ---
+
+// 1. WELCOME SCREEN
 function enterCasino() {
+    // Reset logs if entering fresh
+    gameState.casino.lastLog = ''; 
+    
+    const display = document.getElementById('main-display');
+    if (!display) return;
+
+    display.innerHTML = `
+        <h1>Luna Casino Deck</h1>
+        <p style="color: #8a99a8; text-align: center; margin-bottom: 30px; line-height: 1.6;">
+            Welcome to the High-Low Dice Arena!<br>
+            A random 6-sided die will be cast. Your goal is simple: predict whether the next consecutive roll will be <strong>HIGHER</strong> or <strong>LOWER</strong> than the active one. <br><br>
+            Each correct guess awards <strong>500 Credits</strong>. Ties result in a push.
+        </p>
+        
+        <div class="options-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <button class="station-btn" onclick="startCasinoGame()" style="border-color: #4af626; color: #4af626; padding: 12px;">Play Game</button>
+            <button class="station-btn" onclick="showHubMenu()" style="border-color: #8a99a8; color: #8a99a8; padding: 12px;">Return to Hub</button>
+        </div>
+    `;
+}
+
+// Helper to transition from Welcome to Game loop
+function startCasinoGame() {
     gameState.casino.currentRoll = Math.floor(Math.random() * 6) + 1;
     renderCasinoUI();
 }
 
+// 2. CORE GAME SCREEN (Choosing Higher or Lower)
 function renderCasinoUI() {
     const display = document.getElementById('main-display');
     if (!display) return;
 
     display.innerHTML = `
         <h1>Luna Casino Deck</h1>
-        <div class="dice-matrix">CURRENT DIE: [ ${gameState.casino.currentRoll} ]</div>
-        <p id="casino-log" style="color: #8a99a8; min-height: 40px; margin-bottom: 20px; text-align:center;">${gameState.casino.lastLog}</p>
+        <div class="dice-matrix" style="text-align: center; font-size: 1.5rem; margin-bottom: 30px;">
+            CURRENT DIE: [ ${gameState.casino.currentRoll} ]
+        </div>
         
-        <div class="options-grid">
-            <button class="station-btn" onclick="playCasinoTurn('H')" style="border-color: #4af626; color: #4af626;">HIGHER ▲</button>
-            <button class="station-btn" onclick="playCasinoTurn('L')" style="border-color: #ff3333; color: #ff3333;">LOWER ▼</button>
-            <button class="station-btn" onclick="showHubMenu()" style="grid-column: span 2; border-color: #8a99a8; color: #8a99a8; padding: 12px;">Return to Hub</button>
+        <div class="options-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <button class="station-btn" onclick="playCasinoTurn('H')" style="border-color: #4af626; color: #4af626; padding: 12px;">HIGHER ▲</button>
+            <button class="station-btn" onclick="playCasinoTurn('L')" style="border-color: #ff3333; color: #ff3333; padding: 12px;">LOWER ▼</button>
         </div>
     `;
 }
 
+// Core Logic Execution
 function playCasinoTurn(guess) {
     let secondRoll = Math.floor(Math.random() * 6) + 1;
-    let won = false;
+    let currentRoll = gameState.casino.currentRoll;
+    let outcomeHtml = '';
 
-    if (gameState.casino.currentRoll === secondRoll) {
-        won = false;
-    } else if (guess === 'H' && secondRoll > gameState.casino.currentRoll) {
-        won = true;
-    } else if (guess === 'L' && secondRoll < gameState.casino.currentRoll) {
-        won = true;
-    }
-
-    if (won) {
+    // Determine results
+    if (currentRoll === secondRoll) {
+        outcomeHtml = `<span style="color: #ffcc00;">PUSH: Next roll was also [ ${secondRoll} ]. No credits lost.</span>`;
+    } 
+    else if ((guess === 'H' && secondRoll > currentRoll) || (guess === 'L' && secondRoll < currentRoll)) {
         gameState.credits += 500;
-        gameState.casino.lastLog = `<span style="color: #4af626;">SUCCESS: Next roll was [ ${secondRoll} ]. +500 Credits.</span>`;
-    } else {
+        outcomeHtml = `<span style="color: #4af626;">SUCCESS: Next roll was [ ${secondRoll} ]. +500 Credits.</span>`;
+    } 
+    else {
         gameState.credits -= 500;
-        gameState.casino.lastLog = `<span style="color: #ff3333;">FAILED: Next roll was [ ${secondRoll} ]. -500 Credits.</span>`;
+        outcomeHtml = `<span style="color: #ff3333;">FAILED: Next roll was [ ${secondRoll} ]. -500 Credits.</span>`;
     }
 
-    gameState.casino.currentRoll = Math.floor(Math.random() * 6) + 1;
+    // Update Header UI for credit tracking changes
     updateHeaderUI();
-    renderCasinoUI();
+    
+    // Pass execution directly to the result screen
+    renderCasinoResult(currentRoll, secondRoll, outcomeHtml);
 }
+
+// 3. RESULT SCREEN (Showing results and next-step actions)
+function renderCasinoResult(oldRoll, newRoll, outcomeText) {
+    const display = document.getElementById('main-display');
+    if (!display) return;
+
+    // Set the old second roll as the new starting point if they play again
+    gameState.casino.currentRoll = newRoll;
+
+    display.innerHTML = `
+        <h1>Luna Casino Deck</h1>
+        <div style="text-align: center; margin-bottom: 25px; line-height: 1.8;">
+            <p style="color: #8a99a8;">You started with: <strong>[ ${oldRoll} ]</strong></p>
+            <p style="font-size: 1.3rem; font-weight: bold; margin: 15px 0;">Result: ${outcomeText}</p>
+        </div>
+        
+        <div class="options-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
+            <button class="station-btn" onclick="renderCasinoUI()" style="border-color: #4af626; color: #4af626; padding: 12px;">Play Again</button>
+            <button class="station-btn" onclick="showHubMenu()" style="border-color: #8a99a8; color: #8a99a8; padding: 12px;">Quit to Hub</button>
+        </div>
+    `;
+}
+
 
 // Safely initializes the hub rendering setup once the DOM tree has finished compiling
 document.addEventListener("DOMContentLoaded", () => {
