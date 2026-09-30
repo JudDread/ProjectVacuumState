@@ -32,9 +32,9 @@ function enterCasino() {
     display.innerHTML = `
         <h1>Luna Casino Deck</h1>
         <p style="color: #8a99a8; text-align: center; margin-bottom: 30px; line-height: 1.6;">
-            Welcome to the High-Low Dice Arena!<br>
+            Welcome to the High-Low Dice Casino!<br>
             A random 6-sided die will be cast. Your goal is simple: predict whether the next consecutive roll will be <strong>HIGHER</strong> or <strong>LOWER</strong> than the active one. <br><br>
-            Each correct guess awards <strong>500 Credits</strong>. Ties result in a push.
+            Wrong guesses cost <strong>500 Credits</strong> and each correct guess awards <strong>500 Credits</strong>. Ties result in a push (-250 credits).
         </p>
         
         <div class="options-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
@@ -76,7 +76,8 @@ function playCasinoTurn(guess) {
 
     // Determine results
     if (currentRoll === secondRoll) {
-        outcomeHtml = `<span style="color: #ffcc00;">PUSH: Next roll was also [ ${secondRoll} ]. No credits lost.</span>`;
+        gameState.credits -= 250;
+        outcomeHtml = `<span style="color: #ffcc00;">PUSH: Next roll was also [ ${secondRoll} ]. -250 Credits.</span>`;
     } 
     else if ((guess === 'H' && secondRoll > currentRoll) || (guess === 'L' && secondRoll < currentRoll)) {
         gameState.credits += 500;
