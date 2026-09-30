@@ -129,9 +129,3 @@ function renderCasinoResult(oldRoll, newRoll, outcomeText) {
         </div>
     `;
 }
-
-
-// Safely initializes the hub rendering setup once the DOM tree has finished compiling
-document.addEventListener("DOMContentLoaded", () => {
-    showHubMenu();
-});
