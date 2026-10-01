@@ -54,27 +54,6 @@
     opacity: 0;
     visibility: hidden;
 }
-/* Base header style with dynamic background capability */
-.game-header {
-    position: relative; 
-    overflow: hidden; 
-    padding: 20px;
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
-    min-height: 120px;
-    flex-shrink: 0;
-    
-    /* 1. Define the default image if no custom property is provided */
-    --header-bg: url('../images/defaultHub.jpg'); 
-    
-    /* 2. Layer the dark overlay on top of the variable background */
-    /*background-image: linear-gradient(rgba(11, 12, 16, 0.85), rgba(11, 12, 16, 0.85)), 
-                      var(--header-bg);*/
-                      
-    background-size: cover;
-    background-position: center;
-    background-color: #0b0c10;
-    transition: background-image 0.3s ease; /* Smooth fade when switching background files */
-}
 
 body {
     background-color: #0d0f12;
@@ -125,7 +104,26 @@ h1 {
     text-align: center;
     padding-bottom: 5px;
 }
-
+.game-header {
+    position: relative; 
+    overflow: hidden; 
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    min-height: 120px;
+    flex-shrink: 0;
+    
+    /* 1. Define the default image if no custom property is provided */
+    --header-bg: url('../images/defaultHub.jpg'); 
+    
+    /* 2. Layer the dark overlay on top of the variable background */
+    /*background-image: linear-gradient(rgba(11, 12, 16, 0.85), rgba(11, 12, 16, 0.85)), 
+                      var(--header-bg);*/
+                      
+    background-size: cover;
+    background-position: center;
+    background-color: #0b0c10;
+    transition: background-image 0.3s ease; /* Smooth fade when switching background files */
+}
 .options-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
