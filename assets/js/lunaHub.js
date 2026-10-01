@@ -1,10 +1,18 @@
 // --- MODULE: MAIN HUB MENU ---
+//this sets the background image for the headers
+function setHeaderBg(file) {
+    const header = document.getElementById('game-header');
+    if (header) {
+        const url = new URL(`assets/images/${file}`, document.baseURI).href;
+        header.style.setProperty('--header-bg', `url('${url}')`);
+    }
+}
 function showHubMenu() {
     
     // Set the background image to the lunaHub file
     const header = document.getElementById('game-header');
     if (header) {
-        header.style.setProperty('--header-bg', "url('./assets/images/lunaHub.jpg')");
+        setHeaderBg('lunaHub.jpg');
     }
 
     const display = document.getElementById('main-display');
@@ -34,7 +42,7 @@ function enterCasino() {
     // Set the background image to the casino file
     const header = document.getElementById('game-header');
     if (header) {
-        header.style.setProperty('--header-bg', "url('./assets/images/lunarCasino.jpg')");
+        setHeaderBg('lunarCasino.jpg');
 }
 
 // 1. WELCOME SCREEN
