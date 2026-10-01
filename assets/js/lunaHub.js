@@ -1,71 +1,77 @@
-// --- MODULE: MAIN HUB MENU ---
-//this sets the background image for the headers
-function setHeaderBg(file) {
-    const header = document.getElementById('game-header');
-    if (header) {
-        const url = new URL(`assets/images/${file}`, document.baseURI).href;
-        header.style.setProperty('--header-bg', `url('${url}')`);
-    }
-}
-function showHubMenu() {
-    
-    // Set the background image to the lunaHub file
-    const header = document.getElementById('game-header');
-    if (header) {
-        setHeaderBg('lunaHub.jpg');
-    }
+// --- SHARED HELPERS ---
 
+// Builds the area image shown at the top of the body, under the title.
+// If the image fails to load, the banner hides itself.
+function areaBanner(fileName, altText) {
+    return `
+        <div class="area-banner">
+            <img src="assets/images/${fileName}" alt="${altText}"
+                 onerror="this.parentElement.style.display='none'">
+        </div>
+    `;
+}
+
+function setLocation(name) {
+    gameState.currentLocation = name;
+    updateHeaderUI();
+}
+
+// --- MODULE: MAIN HUB MENU ---
+function showHubMenu() {
     const display = document.getElementById('main-display');
     if (!display) return;
-    
+
+    setLocation("Luna Station Hub");
+
     display.innerHTML = `
         <h1>Luna Station Hub</h1>
-        <p style="color: #8a99a8; text-align: center;">Welcome back, Operator. Select a destination.</p>
-        
+        ${areaBanner('lunaHub.jpg', 'Luna Station Hub')}
+        <p class="area-text">Welcome back, Operator. Select a destination.</p>
+
         <div class="options-grid">
             <button class="station-btn" onclick="alert('Entering Hangar...')">Hangar</button>
             <button class="station-btn" onclick="alert('Entering Shipyard...')">Shipyard</button>
             <button class="station-btn" onclick="alert('Opening Commodity Market...')">Market</button>
-            <button class="station-btn" onclick="enterCasino()" style="color: #00ffff; border-color: #00ffff;">Casino</button>
+            <button class="station-btn btn-cyan" onclick="enterCasino()">Casino</button>
             <button class="station-btn" onclick="alert('Accessing Faction Missions...')">Missions</button>
-            <button class="station-btn" onclick="alert('Undocking Ship...')" style="border-color: #ff9900; color: #ff9900;">Undock Ship</button>
+            <button class="station-btn btn-amber" onclick="alert('Undocking Ship...')">Undock Ship</button>
         </div>
     `;
-    updateHeaderUI();
 }
 
 // --- MODULE: CASINO ---
 
-function enterCasino() {
-    gameState.casino.lastLog = ''; 
-    
-    // Set the background image to the casino file
-    const header = document.getElementById('game-header');
-    if (header) {
-        setHeaderBg('lunarCasino.jpg');
-}
-
 // 1. WELCOME SCREEN
-    
+function enterCasino() {
+    gameState.casino.lastLog = '';
+
     const display = document.getElementById('main-display');
     if (!display) return;
 
+    setLocation("Luna Casino Deck");
+
     display.innerHTML = `
         <h1>Luna Casino Deck</h1>
-        <p style="color: #8a99a8; text-align: center; margin-bottom: 30px; line-height: 1.6;">
+        ${areaBanner('lunarCasino.jpg', 'Luna Casino Deck')}
+        <p class="area-text">
             Welcome to the High-Low Dice Casino!<br>
-            A random 6-sided die will be cast. Your goal is simple: predict whether the next consecutive roll will be <strong>HIGHER</strong> or <strong>LOWER</strong> than the active one. <br><br>
-            Wrong guesses cost <strong>500 Credits</strong> and each correct guess awards <strong>500 Credits</strong>. Ties result in a push (-250 credits).
+            A random 6-sided die will be cast. Predict whether the next roll will be
+            <strong>HIGHER</strong> or <strong>LOWER</strong> than the active one.
         </p>
-        
-        <div class="options-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-            <button class="station-btn" onclick="startCasinoGame()" style="border-color: #4af626; color: #4af626; padding: 12px;">Play Game</button>
-            <button class="station-btn" onclick="showHubMenu()" style="border-color: #8a99a8; color: #8a99a8; padding: 12px;">Return to Hub</button>
+        <p class="area-text rules">
+            Correct guess: <strong>+500</strong> Credits &nbsp;|&nbsp;
+            Wrong guess: <strong>-500</strong> Credits &nbsp;|&nbsp;
+            Tie (push): <strong>-250</strong> Credits
+        </p>
+
+        <div class="options-grid">
+            <button class="station-btn btn-green" onclick="startCasinoGame()">Play Game</button>
+            <button class="station-btn btn-muted" onclick="showHubMenu()">Return to Hub</button>
         </div>
     `;
 }
 
-// Helper to transition from Welcome to Game loop
+// Transition from Welcome to Game loop
 function startCasinoGame() {
     gameState.casino.currentRoll = Math.floor(Math.random() * 6) + 1;
     renderCasinoUI();
@@ -78,62 +84,63 @@ function renderCasinoUI() {
 
     display.innerHTML = `
         <h1>Luna Casino Deck</h1>
-        <div class="dice-matrix" style="text-align: center; font-size: 1.5rem; margin-bottom: 30px;">
-            CURRENT DIE: [ ${gameState.casino.currentRoll} ]
+        ${areaBanner('lunarCasino.jpg', 'Luna Casino Deck')}
+
+        <div class="dice-matrix">
+            <span class="dice-label">Current Die</span>
+            <span class="dice-face">${gameState.casino.currentRoll}</span>
         </div>
-        
-        <div class="options-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-            <button class="station-btn" onclick="playCasinoTurn('H')" style="border-color: #4af626; color: #4af626; padding: 12px;">HIGHER ▲</button>
-            <button class="station-btn" onclick="playCasinoTurn('L')" style="border-color: #ff3333; color: #ff3333; padding: 12px;">LOWER ▼</button>
+
+        <div class="options-grid">
+            <button class="station-btn btn-green" onclick="playCasinoTurn('H')">Higher ▲</button>
+            <button class="station-btn btn-red" onclick="playCasinoTurn('L')">Lower ▼</button>
         </div>
     `;
 }
 
 // Core Logic Execution
 function playCasinoTurn(guess) {
-    let secondRoll = Math.floor(Math.random() * 6) + 1;
-    let currentRoll = gameState.casino.currentRoll;
+    const secondRoll = Math.floor(Math.random() * 6) + 1;
+    const currentRoll = gameState.casino.currentRoll;
     let outcomeHtml = '';
 
-    // Determine results
     if (currentRoll === secondRoll) {
         gameState.credits -= 250;
-        outcomeHtml = `<span style="color: #ffcc00;">PUSH: Next roll was also [ ${secondRoll} ]. -250 Credits.</span>`;
-    } 
+        outcomeHtml = `<span class="result-push">PUSH: Next roll was also [ ${secondRoll} ]. -250 Credits.</span>`;
+    }
     else if ((guess === 'H' && secondRoll > currentRoll) || (guess === 'L' && secondRoll < currentRoll)) {
         gameState.credits += 500;
-        outcomeHtml = `<span style="color: #4af626;">SUCCESS: Next roll was [ ${secondRoll} ]. +500 Credits.</span>`;
-    } 
+        outcomeHtml = `<span class="result-win">SUCCESS: Next roll was [ ${secondRoll} ]. +500 Credits.</span>`;
+    }
     else {
         gameState.credits -= 500;
-        outcomeHtml = `<span style="color: #ff3333;">FAILED: Next roll was [ ${secondRoll} ]. -500 Credits.</span>`;
+        outcomeHtml = `<span class="result-loss">FAILED: Next roll was [ ${secondRoll} ]. -500 Credits.</span>`;
     }
 
-    // Update Header UI for credit tracking changes
     updateHeaderUI();
-    
-    // Pass execution directly to the result screen
     renderCasinoResult(currentRoll, secondRoll, outcomeHtml);
 }
 
-// 3. RESULT SCREEN (Showing results and next-step actions)
+// 3. RESULT SCREEN
 function renderCasinoResult(oldRoll, newRoll, outcomeText) {
     const display = document.getElementById('main-display');
     if (!display) return;
 
-    // Set the old second roll as the new starting point if they play again
+    // The new roll becomes the starting point if they play again
     gameState.casino.currentRoll = newRoll;
 
     display.innerHTML = `
         <h1>Luna Casino Deck</h1>
-        <div style="text-align: center; margin-bottom: 25px; line-height: 1.8;">
-            <p style="color: #8a99a8;">You started with: <strong>[ ${oldRoll} ]</strong></p>
-            <p style="font-size: 1.3rem; font-weight: bold; margin: 15px 0;">Result: ${outcomeText}</p>
+        ${areaBanner('lunarCasino.jpg', 'Luna Casino Deck')}
+
+        <div class="result-panel">
+            <p class="area-text">You started with: <strong>[ ${oldRoll} ]</strong></p>
+            <p class="result-line">${outcomeText}</p>
         </div>
-        
-        <div class="options-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
-            <button class="station-btn" onclick="renderCasinoUI()" style="border-color: #4af626; color: #4af626; padding: 12px;">Play Again</button>
-            <button class="station-btn" onclick="showHubMenu()" style="border-color: #8a99a8; color: #8a99a8; padding: 12px;">Quit to Hub</button>
+
+        <div class="options-grid">
+            <button class="station-btn btn-green" onclick="renderCasinoUI()">Play Again</button>
+            <button class="station-btn btn-muted" onclick="showHubMenu()">Quit to Hub</button>
         </div>
     `;
 }
