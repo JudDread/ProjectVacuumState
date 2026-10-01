@@ -23,7 +23,7 @@ window.onload = () => {
     // 1. Instantly display standard UI values in the background
     updateHeaderUI();
     
-    // 2. Hold the splash screen for exactly 2 seconds (2000ms)
+    // 2. Hold the splash screen
     setTimeout(() => {
         if (splash) {
             splash.classList.add('splash-hidden');
