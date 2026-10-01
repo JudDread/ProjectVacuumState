@@ -12,24 +12,29 @@ const gameState = {
 function updateHeaderUI() {
     const creditEl = document.getElementById('credit-count');
     if (creditEl) {
-        creditEl.innerText = gameState.credits;
+        creditEl.innerText = gameState.credits.toLocaleString();
+    }
+
+    const locationEl = document.getElementById('location-name');
+    if (locationEl) {
+        locationEl.innerText = gameState.currentLocation;
     }
 }
 
 // Kick off initialization sequence when the browser tab mounts
 window.onload = () => {
     const splash = document.getElementById('splash-screen');
-    
-    // 1. Instantly display standard UI values in the background
+
+    // 1. Display standard UI values in the background
     updateHeaderUI();
-    
+
     // 2. Hold the splash screen
     setTimeout(() => {
         if (splash) {
             splash.classList.add('splash-hidden');
         }
-        
-        // 3. Render the hub menus smoothly after the screen fades
+
+        // 3. Render the hub menu after the splash fades
         showHubMenu();
     }, 3000);
 };
