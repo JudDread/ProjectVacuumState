@@ -3,38 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vacuum State - Luna Hub</title>
-    <!-- Make sure your filename casing matches perfectly -->
-    <link rel="stylesheet" href="./assets/css/style.css"> 
+    <title>Vacuum State - Luna Station</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
 
-    <!-- 1. The Splash Screen Panel Overlay -->
+    <!-- Splash Screen -->
     <div id="splash-screen" class="splash-container">
         <div class="splash-content">
             <h1 class="splash-title">VACUUM STATE</h1>
-            <p class="splash-subtitle">Establishing secure link to terminal...</p>
+            <p class="splash-subtitle">Establishing connection to Luna Station...</p>
             <div class="splash-spinner"></div>
         </div>
     </div>
 
-    <!-- 2. CRITICAL: Element MUST have class="game-header" AND id="game-header" -->
+    <!-- Constant Information Bar -->
     <header>
-        <div class="header-item">LOC: <span id="location-text">Luna Orbit</span></div>
-        <div class="header-item">CREDITS: <span id="credit-count">0</span></div>
+        <div class="header-block">
+            <span class="header-label">Location</span>
+            <span class="header-item" id="location-name">Luna Station Hub</span>
+        </div>
+        <div class="header-block header-right">
+            <span class="header-label">Credits</span>
+            <span class="header-item" id="credit-count">12,500</span>
+        </div>
     </header>
 
-    <!-- 3. The Core Interactive Interface Display Panel -->
-    <main class="game-header" id="game-header">
-        <div id="main-display">
-        <!-- Content will be securely injected here by your JS engines -->
+    <!-- Dynamic Main Screen Container -->
+    <main id="main-display">
+        <!-- JavaScript modules inject screens here -->
     </main>
 
     <footer>
-        SECURE CONNECTION // SYNDICATE-NET SECURED
+        SECURE CHAT: [Syndicate-Net] Operational tick processing normally...
     </footer>
 
-    <!-- Place your script tags right before closing the body -->
+    <!-- Scripts must load in this exact order -->
     <script src="./assets/js/state.js"></script>
     <script src="./assets/js/lunaHub.js"></script>
 </body>
