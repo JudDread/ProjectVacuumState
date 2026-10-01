@@ -1,30 +1,60 @@
-/* Splash Screen Layout */
+/* ==========================================================
+   VACUUM STATE - Luna Station UI
+   ========================================================== */
+
+:root {
+    --bg-deep: #07090c;
+    --bg-panel: #10151c;
+    --bg-raised: #171e28;
+    --border-dim: #1f2a37;
+    --border-glow: #2b3a4d;
+
+    --text: #c9d1d9;
+    --text-dim: #7d8a99;
+    --text-bright: #ffffff;
+
+    --green: #4af626;
+    --cyan: #00e5ff;
+    --amber: #ff9900;
+    --red: #ff4444;
+    --magenta: #ff00ff;
+    --rust: #da7b33;
+
+    --font: 'Courier New', Courier, monospace;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* ---------- Splash Screen ---------- */
 .splash-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #0d1117; /* Gritty dark sci-fi background */
+    background-color: #0d1117;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999; /* Ensures it sits on top of everything */
+    z-index: 9999;
     transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
 .splash-content {
     text-align: center;
-    color: #c9d1d9;
-    font-family: 'Courier New', Courier, monospace;
+    color: var(--text);
+    font-family: var(--font);
 }
 
 .splash-title {
     font-size: 3rem;
     letter-spacing: 0.5rem;
-    color: #da7b33; /* Rust/orange accent matching your theme */
+    color: var(--rust);
     margin-bottom: 10px;
     text-shadow: 0 0 10px rgba(218, 123, 51, 0.5);
+    border: none;
 }
 
 .splash-subtitle {
@@ -33,143 +63,304 @@
     opacity: 0.8;
 }
 
-/* Simple Loading Spinner */
 .splash-spinner {
     width: 40px;
     height: 40px;
     border: 4px solid rgba(218, 123, 51, 0.2);
-    border-top: 4px solid #da7b33;
+    border-top: 4px solid var(--rust);
     border-radius: 50%;
     margin: 0 auto;
     animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
+    0%   { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
 
-/* Class to trigger transition via JS */
 .splash-hidden {
     opacity: 0;
     visibility: hidden;
 }
 
+/* ---------- Page Layout ---------- */
 body {
-    /*background-color: #0d0f12;
-    color: #4af626; */
-    font-family: 'Courier New', Courier, monospace;
-    margin: 0;
-    padding: 10px;
+    background:
+        radial-gradient(ellipse at top, #121a24 0%, var(--bg-deep) 60%) fixed;
+    color: var(--green);
+    font-family: var(--font);
+    margin: 0 auto;
+    padding: 14px;
+    max-width: 960px;
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    box-sizing: border-box;
+    gap: 12px;
 }
 
+/* ---------- Header (location + credits only) ---------- */
 header {
-    border: 1px solid #4af626;
-    padding: 10px;
     display: flex;
     justify-content: space-between;
-    background: #14191f;
-    margin-bottom: 10px;
-    font-size: 0.9rem;
+    align-items: center;
+    padding: 12px 20px;
+    background: linear-gradient(180deg, var(--bg-raised), var(--bg-panel));
+    border: 1px solid var(--border-glow);
+    border-left: 3px solid var(--green);
+    border-radius: 6px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+    flex-shrink: 0;
+}
+
+.header-block {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.header-right {
+    text-align: right;
+}
+
+.header-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2rem;
+    text-transform: uppercase;
+    color: var(--text-dim);
 }
 
 .header-item {
+    font-size: 1.15rem;
     font-weight: bold;
+    letter-spacing: 1px;
+    color: var(--green);
+    text-shadow: 0 0 8px rgba(74, 246, 38, 0.35);
 }
 
+#credit-count {
+    color: var(--amber);
+    text-shadow: 0 0 8px rgba(255, 153, 0, 0.35);
+}
 
+#credit-count::after {
+    content: " cr";
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+
+/* ---------- Main Panel ---------- */
 main {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid #4af626;
-    /*background: #14191f;*/
-    padding: 15px;
+    padding: 24px 20px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-glow);
+    border-radius: 6px;
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.4), 0 4px 18px rgba(0, 0, 0, 0.45);
     overflow-y: auto;
 }
 
 h1 {
-    color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-top: 60;
-    font-size: 1.5rem;
-    border-bottom: 2px solid #4af626;
     width: 100%;
+    margin: 0 0 18px;
+    padding-bottom: 10px;
     text-align: center;
-    padding-bottom: 5px;
-    min-height: 120px;
-    flex-shrink: 0;
-}
-.game-header {
-    position: top; 
-    overflow: hidden; 
-    padding: 20px;
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
-    min-height: 120px;
-    flex-shrink: 0;
-    
-    /* 1. Define the default image if no custom property is provided */
-    --header-bg: url('../images/defaultHub.jpg'); 
-    
-    /* 2. Layer the dark overlay on top of the variable background */
-    /*background-image: linear-gradient(rgba(11, 12, 16, 0.85), rgba(11, 12, 16, 0.85)), 
-                      var(--header-bg);*/
-                      
-    background-size: cover;
-    background-position: top;
-    transition: background-image 0.3s ease; /* Smooth fade when switching background files */
-}
-.options-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    width: 100%;
-    max-width: 500px;
-    margin-top: 15px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.35rem;
+    color: var(--text-bright);
+    border-bottom: 1px solid var(--border-glow);
+    position: relative;
 }
 
-.station-btn {
-    background: #1b222b;
-    color: #4af626;
-    border: 1px solid #4af626;
-    padding: 20px;
-    font-size: 1.1rem;
-    font-family: inherit;
-    cursor: pointer;
-    text-transform: uppercase;
+h1::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -1px;
+    transform: translateX(-50%);
+    width: 90px;
+    height: 2px;
+    background: var(--green);
+    box-shadow: 0 0 10px var(--green);
+}
+
+/* ---------- Area Banner Image (no overlay) ---------- */
+.area-banner {
+    width: 100%;
+    max-width: 720px;
+    aspect-ratio: 21 / 9;
+    margin: 0 0 20px;
+    border: 1px solid var(--border-glow);
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--bg-deep);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.55), 0 0 0 4px rgba(255, 255, 255, 0.02);
+}
+
+.area-banner img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ---------- Text ---------- */
+.area-text {
+    max-width: 620px;
+    margin: 0 0 14px;
     text-align: center;
+    line-height: 1.7;
+    color: var(--text-dim);
+}
+
+.area-text strong {
+    color: var(--text-bright);
+}
+
+.rules {
+    padding: 10px 16px;
+    font-size: 0.85rem;
+    background: var(--bg-raised);
+    border: 1px solid var(--border-dim);
     border-radius: 4px;
 }
 
-.station-btn:active {
-    background: #4af626;
-    color: #0d0f12;
-}
-
-/* Casino Specific Elements */
-.dice-matrix {
-    font-size: 1.6rem;
-    font-weight: bold;
-    color: #ff00ff;
-    margin: 20px 0;
-    border: 1px dashed #ff00ff;
-    padding: 15px;
+/* ---------- Buttons ---------- */
+.options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
     width: 100%;
-    box-sizing: border-box;
-}
-
-footer {
-    border: 1px solid #4af626;
-    padding: 8px;
-    background: #14191f;
+    max-width: 520px;
     margin-top: 10px;
-    font-size: 0.8rem;
-    text-align: center;
 }
 
+.station-btn {
+    --accent: var(--green);
+    padding: 18px 14px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--accent);
+    background: linear-gradient(180deg, var(--bg-raised), var(--bg-panel));
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.station-btn:hover {
+    background: var(--accent);
+    color: var(--bg-deep);
+    box-shadow: 0 0 16px var(--accent);
+    transform: translateY(-2px);
+}
+
+.station-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 0 6px var(--accent);
+}
+
+.btn-green { --accent: var(--green); }
+.btn-cyan  { --accent: var(--cyan); }
+.btn-amber { --accent: var(--amber); }
+.btn-red   { --accent: var(--red); }
+.btn-muted { --accent: #8a99a8; }
+
+/* ---------- Casino ---------- */
+.dice-matrix {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 520px;
+    margin: 0 0 14px;
+    padding: 18px;
+    background: var(--bg-raised);
+    border: 1px dashed var(--magenta);
+    border-radius: 6px;
+}
+
+.dice-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.3rem;
+    text-transform: uppercase;
+    color: var(--text-dim);
+}
+
+.dice-face {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 76px;
+    height: 76px;
+    font-size: 2.6rem;
+    font-weight: bold;
+    color: var(--magenta);
+    background: var(--bg-deep);
+    border: 2px solid var(--magenta);
+    border-radius: 12px;
+    box-shadow: 0 0 18px rgba(255, 0, 255, 0.35), inset 0 0 12px rgba(255, 0, 255, 0.15);
+}
+
+.result-panel {
+    width: 100%;
+    max-width: 520px;
+    margin-bottom: 10px;
+    padding: 16px;
+    text-align: center;
+    background: var(--bg-raised);
+    border: 1px solid var(--border-dim);
+    border-radius: 6px;
+}
+
+.result-panel .area-text {
+    margin-bottom: 8px;
+}
+
+.result-line {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+.result-win  { color: var(--green); }
+.result-loss { color: var(--red); }
+.result-push { color: #ffcc00; }
+
+/* ---------- Footer ---------- */
+footer {
+    padding: 10px;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    text-align: center;
+    color: var(--text-dim);
+    background: var(--bg-panel);
+    border: 1px solid var(--border-dim);
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+/* ---------- Scrollbar ---------- */
+main::-webkit-scrollbar { width: 8px; }
+main::-webkit-scrollbar-track { background: var(--bg-deep); }
+main::-webkit-scrollbar-thumb { background: var(--border-glow); border-radius: 4px; }
+
+/* ---------- Mobile ---------- */
+@media (max-width: 560px) {
+    body { padding: 8px; gap: 8px; }
+    h1 { font-size: 1.15rem; letter-spacing: 0.2rem; }
+    .splash-title { font-size: 1.8rem; letter-spacing: 0.25rem; }
+    .options-grid { gap: 10px; }
+    .station-btn { padding: 14px 8px; font-size: 0.85rem; }
+    .area-banner { aspect-ratio: 16 / 9; }
+}
